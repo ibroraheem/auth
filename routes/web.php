@@ -19,3 +19,5 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/editmail', 'EditmailController@index')->name('editmail');
+Route::POST('/editmail', 'EditmailController@updatemail')->name('editmail');

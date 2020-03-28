@@ -27,10 +27,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+        return view('home');
+    }
+
+    public function mail()
+    {
         $user = auth()->user();
         Mail::to($user)->send(new WelcomeMail());
         return view('home');
     }
-
 }
 

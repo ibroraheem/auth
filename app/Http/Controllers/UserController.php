@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
@@ -17,46 +17,18 @@ class UserController extends Controller
     {
         return view('users.edit');
     }
-    public function edit(User $user)
+    public function edit(Request $request)
     {
-        $user = Auth::user();
-        return view('users.edit', compact('user'));
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->firstname = Request::input('firstname');
+        $user->middlename = Request::input('middlename');
+        $user->lastname = Request::input('lastname');
+        $user->country = Request::input('country');
+        $user->city = Request::input('city');
+        $user->dateofbirth = Request::input('dateofbirth');
+        $user->save();
+        return view('home');
+
     }
-    public function update(User $user)
-    {
-        if (Auth::user()->email == request('email')) {
-            $this->validate(request(), [
-                // 'email' => 'required|email|unique:users',
-                'password' => 'required|min:6|confirmed'
-            ]);
-            // 'email' => 'required|email|unique:users',
-            $user->firstname = request('firstname');
-            $user->middlename = request('middlename');
-            $user->lastname = request('lastname');
-            $user->country = request('country');
-            $user->city = request('city');
-            $user->dateofbirth = request('dateofbirth');
-
-            $user->save();
-
-            return back();
-        } else{
-            $this->validate(request(), [
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6|confirmed'
-                ]);
-                // 'email' => 'required|email|unique:users',
-                $user->firstname = request('firstname');
-                $user->middlename = request('middlename');
-                $user->lastname = request('lastname');
-                $user->country = request('country');
-                $user->city = request('city');
-                $user->dateofbirth = request('dateofbirth');
-
-                $user->save();
-
-                return back();
-            }
-    }
-
 }

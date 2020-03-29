@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Edit Profile') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{route('users.edit', $user->email)}}">
+                    <form method="POST" action="{{route('users.edit', $user ?? '')}}">
                         {{ method_field('PATCH') }}
                         {{ csrf_field() }}
 

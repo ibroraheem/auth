@@ -22,5 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/editmail', 'EditmailController@index')->name('editmail');
 Route::POST('/editmail', 'EditmailController@updatemail')->name('editmail');
 Route::get('/mail', 'HomeController@mail');
-Route::get('/edit-profile', 'UserController@show');
+Route::get('/edit-profile', 'UserController@show')->name('users.edit');;
 Route::patch('/edit-profile', 'UserController@edit');
+Route::get('profile', 'UserController@profile')->name('profile');
+Route::post('profile', 'UserController@update_avatar');

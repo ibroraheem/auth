@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use Illuminate\Http\Request;
+use Request;
 use Twilio\Rest\Client;
 
 class SendWhatsappOTPController extends Controller
@@ -18,20 +18,16 @@ class SendWhatsappOTPController extends Controller
 
     public function show()
     {
-        return view('users.verify');
+        return view('users.sendotp');
     }
-    protected function store(Request $request)
-    {
+    public function sendOtp(){
         $otp = rand(1000, 9999);
-        $request ['otp'] = $otp;
         $id = Auth::user()->id;
         $user = User::find($id);
-        $user->phone_number = Request::input('phone_number');
+        $user->otp = $otp;
         $user->save();
-        $this->WhatsappVerifcation->store($request);
-        return $this->sendSms($request);
         $this->sendWhatsappNotification($otp, $user->phone_number);
-        return $user;
+        return view('users.verify');
     }
     private function sendWhatsappNotification(string $otp, string $recipient)
     {
@@ -40,7 +36,18 @@ class SendWhatsappOTPController extends Controller
         $auth_token = getenv("TWILIO_AUTH_TOKEN");
 
         $client = new Client($account_sid, $auth_token);
-        $message = "Your registration pin otp is $otp";
+        $message = "Your OTP code is $otp";
         return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
     }
-}
+
+    public function verifyOtp($user, $request)
+    {
+        if($request->otp == $user->otp)
+        {
+            $request["status"] = 'verified';
+            return view('home');
+        }
+    }
+
+    }
+

@@ -27,6 +27,7 @@ class UserController extends Controller
         $user->lastname = Request::input('lastname');
         $user->country = Request::input('country');
         $user->city = Request::input('city');
+        $user->phone_number = Request::input('phone_number');
         $user->dateofbirth = Request::input('dateofbirth');
         $user->save();
         return view('home');

@@ -26,5 +26,5 @@ Route::get('/edit-profile', 'UserController@show')->name('users.edit');;
 Route::patch('/edit-profile', 'UserController@edit');
 Route::get('profile', 'UserController@profile')->name('profile');
 Route::post('profile', 'UserController@update_avatar');
-Route::get('verify-phone', 'SendWhatsappOTPController@show')->name('verify-phone');
-Route::patch('verify-phone', 'SendWhatsappOTPController@store');
+Route::get('verify', 'SendWhatsappOTPController@sendOtp')->name('verify');
+Route::post('verify', 'SendWhatsappOTPController@verifyOtp');

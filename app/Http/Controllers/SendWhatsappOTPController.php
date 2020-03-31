@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Request;
 use Twilio\Rest\Client;
+// use Illuminate\Support\Facades\Request;
+
+
 
 class SendWhatsappOTPController extends Controller
 {
@@ -40,13 +43,26 @@ class SendWhatsappOTPController extends Controller
         return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
     }
 
-    public function verifyOtp($user, $request)
+
+    public function verifyOtp(Request $request)
     {
-        if($request->otp == $user->otp)
-        {
-            $request["status"] = 'verified';
-            return view('home');
+        $id = Auth::user()->id;
+        $user = User::find($id);
+    if ($user->status === 'Verified'){
+
+        echo 'Number Already Verified';
+
+    }else{
+        
+        $request->otp = Request::input('otp');
+        if ($request->otp == $user->otp) {
+            $user->status = 'Verified';
+            $user->save();
+            echo "Mobile Number Verified";
+        } else {
+            echo 'Invalid OTP';
         }
+    }
     }
 
     }

@@ -11,9 +11,9 @@
             {{ method_field('POST') }}
             {{ csrf_field() }}
         <div class="form-group row">
-            <label for="contact_number" class="col-md-4 col-form-label text-md-right">{{ __('Enter OTP') }}</label>
+            <label for="otp" class="col-md-4 col-form-label text-md-right">{{ __('Enter OTP') }}</label>
             <div class="col-md-6">
-                <input type="tel" id="phone_number" class="form-control @error('contact_number') is-invalid @enderror" name="contact_number" required >
+                <input type="tel" id="otp" class="form-control @error('otp') is-invalid @enderror" name="otp" required >
 
                 @error('contact_number')
                     <span class="invalid-feedback" role="alert">

@@ -30,7 +30,12 @@ class UserController extends Controller
         $user->phone_number = Request::input('phone_number');
         $user->dateofbirth = Request::input('dateofbirth');
         $user->save();
-        return view('home');
+        if($user->status == 'Verified'){
+            return redirect('home');
+        } else{
+            return redirect('verify');
+        }
+
     }
     public function profile()
     {

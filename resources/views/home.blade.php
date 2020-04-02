@@ -13,14 +13,23 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-body">
-                        <img src="https://img.icons8.com/ios-glyphs/30/000000/phone--v1.png"/> <p class="d-inline">Verify Phone Number</p>
-                        <a class="stretched-link" href="{{route('verify')}}"></a>
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/phone--v1.png"/>
+                        <p class="d-inline">Verify Phone Number</p>
+
+
+                        @if($users === 'Verified')
+                        <p class="d-inline" style="color:lightgreen">&#10003;</p>
+                        @else
+                         <a class="stretched-link" href="{{route('verify')}}"></a>
+                        @endif
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-body">

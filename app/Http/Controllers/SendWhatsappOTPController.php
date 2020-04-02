@@ -13,24 +13,25 @@ use Twilio\Rest\Client;
 class SendWhatsappOTPController extends Controller
 {
     protected $otp;
-    protected $WhatsappVerification;
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function show()
-    {
-        return view('users.sendotp');
-    }
     public function sendOtp(){
-        $otp = rand(1000, 9999);
         $id = Auth::user()->id;
         $user = User::find($id);
-        $user->otp = $otp;
-        $user->save();
-        $this->sendWhatsappNotification($otp, $user->phone_number);
-        return view('users.verify');
+        if($user->status == 'Verified'){
+            return redirect('home');
+        }else{
+            $otp = rand(1000, 9999);
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $user->otp = $otp;
+            $user->save();
+            $this->sendWhatsappNotification($otp, $user->phone_number);
+            return view('users.verify');
+         }
     }
     private function sendWhatsappNotification(string $otp, string $recipient)
     {
@@ -48,22 +49,14 @@ class SendWhatsappOTPController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::find($id);
-    if ($user->status === 'Verified'){
-
-        echo 'Number Already Verified';
-
-    }else{
-        
         $request->otp = Request::input('otp');
         if ($request->otp == $user->otp) {
             $user->status = 'Verified';
             $user->save();
-            echo "Mobile Number Verified";
+            return redirect('home');
         } else {
             echo 'Invalid OTP';
         }
     }
-    }
-
     }
 

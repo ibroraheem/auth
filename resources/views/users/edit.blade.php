@@ -335,7 +335,7 @@
                             <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Phone NUmber') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="tel" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" required >
+                                <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" required >
 
                                 @error('phone_number')
                                     <span class="invalid-feedback" role="alert">
